@@ -50,3 +50,27 @@ stages:
         - 03-local-wheelhouse/**/*
         - ci/**/*
         - .gitlab-ci.yml
+
+04-python-versions:
+  extends: .example
+  variables:
+    EXAMPLE_DIR: 04-python-versions
+  trigger:
+    include: 04-python-versions/.gitlab-ci.yml
+  rules:
+    - changes:
+        - 04-python-versions/**/*
+        - ci/**/*
+        - .gitlab-ci.yml
+
+05-local-python-mirror:
+  extends: .example
+  variables:
+    EXAMPLE_DIR: 05-local-python-mirror
+  trigger:
+    include: 05-local-python-mirror/.gitlab-ci.yml
+  rules:
+    - changes:
+        - 05-local-python-mirror/**/*
+        - ci/**/*
+        - .gitlab-ci.yml

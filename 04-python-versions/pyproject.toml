@@ -1,0 +1,6 @@
+[project]
+name = "python-versions"
+version = "0.1.0"
+description = "Installing, pinning and switching Python versions with uv"
+requires-python = ">=3.10"
+dependencies = []

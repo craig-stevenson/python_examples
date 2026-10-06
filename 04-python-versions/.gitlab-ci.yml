@@ -1,0 +1,21 @@
+include:
+  - local: ci/uv-base.yml
+
+pinned-version:
+  extends: .uv
+  script:
+    # The image ships Python 3.12. .python-version asks for 3.13,
+    # so uv downloads 3.13 before creating the environment.
+    - uv sync --locked
+    - uv run main.py
+
+each-supported-version:
+  extends: .uv
+  parallel:
+    matrix:
+      # UV_PYTHON is the environment form of --python. It overrides .python-version.
+      - UV_PYTHON: ["3.10", "3.11", "3.12", "3.13"]
+  script:
+    - uv sync --locked
+    - uv run python --version | grep -F "Python $UV_PYTHON."
+    - uv run main.py

@@ -7,6 +7,8 @@ Small Python projects, each showing one way of configuring [uv](https://docs.ast
 | [01-hello-uv](01-hello-uv/) | The simplest uv project: no dependencies, one script | `uv init`, `uv run`, `uv sync` |
 | [02-adding-dependencies](02-adding-dependencies/) | Adding, constraining, grouping, upgrading and removing dependencies | `uv add`, `uv remove`, `uv lock --upgrade-package` |
 | [03-local-wheelhouse](03-local-wheelhouse/) | Installing from a local folder of wheels with no internet access | `no-index`, `find-links` |
+| [04-python-versions](04-python-versions/) | Installing, pinning and switching between Python versions | `uv python install`, `uv python pin`, `uv run --python` |
+| [05-local-python-mirror](05-local-python-mirror/) | Installing Python itself from a local folder with no internet access | `UV_PYTHON_INSTALL_MIRROR`, `uv python install --offline` |
 
 ## Running an example
 

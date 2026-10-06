@@ -1,0 +1,15 @@
+include:
+  - local: ci/uv-base.yml
+
+install-from-local-folder:
+  extends: .uv
+  script:
+    # Connected step: download the build for .python-version into ./pythons.
+    # The image's own Python 3.12 runs the script.
+    - python3 fetch_pythons.py
+    # Offline steps: --offline turns any network request from uv into an error,
+    # so a green job proves Python 3.13 came from ./pythons.
+    - export UV_PYTHON_INSTALL_MIRROR="file://$PWD/pythons"
+    - uv python install --offline
+    - uv sync --locked --offline
+    - uv run --offline main.py
