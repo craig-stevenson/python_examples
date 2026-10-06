@@ -1,0 +1,9 @@
+include:
+  - local: ci/uv-base.yml
+
+run:
+  extends: .uv
+  script:
+    # --locked fails the job if uv.lock is out of date with pyproject.toml.
+    - uv sync --locked
+    - uv run main.py

@@ -1,0 +1,17 @@
+include:
+  - local: ci/uv-base.yml
+
+run-offline:
+  extends: .uv
+  variables:
+    # Any network request from uv becomes an error, so a green job
+    # proves everything came from ./wheels.
+    UV_OFFLINE: "1"
+    # Never try to download a Python interpreter either.
+    UV_PYTHON_DOWNLOADS: never
+  # Nothing is downloaded, so there is nothing worth caching.
+  cache: []
+  after_script: []
+  script:
+    - uv sync --locked --no-cache
+    - uv run main.py

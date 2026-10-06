@@ -1,0 +1,52 @@
+# Parent pipeline: one trigger job per example.
+# Each job starts that example's own .gitlab-ci.yml as a child pipeline,
+# and only when the example (or the shared CI config) has changed.
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+stages:
+  - examples
+
+.example:
+  stage: examples
+  trigger:
+    strategy: depend
+
+01-hello-uv:
+  extends: .example
+  variables:
+    EXAMPLE_DIR: 01-hello-uv
+  trigger:
+    include: 01-hello-uv/.gitlab-ci.yml
+  rules:
+    - changes:
+        - 01-hello-uv/**/*
+        - ci/**/*
+        - .gitlab-ci.yml
+
+02-adding-dependencies:
+  extends: .example
+  variables:
+    EXAMPLE_DIR: 02-adding-dependencies
+  trigger:
+    include: 02-adding-dependencies/.gitlab-ci.yml
+  rules:
+    - changes:
+        - 02-adding-dependencies/**/*
+        - ci/**/*
+        - .gitlab-ci.yml
+
+03-local-wheelhouse:
+  extends: .example
+  variables:
+    EXAMPLE_DIR: 03-local-wheelhouse
+  trigger:
+    include: 03-local-wheelhouse/.gitlab-ci.yml
+  rules:
+    - changes:
+        - 03-local-wheelhouse/**/*
+        - ci/**/*
+        - .gitlab-ci.yml

@@ -1,0 +1,16 @@
+include:
+  - local: ci/uv-base.yml
+
+test:
+  extends: .uv
+  script:
+    # The default sync installs [project.dependencies] plus the "dev" group.
+    - uv sync --locked
+    - uv run pytest
+
+lint:
+  extends: .uv
+  script:
+    # Only the "lint" group: no project dependencies, no dev tools.
+    - uv sync --locked --only-group lint
+    - uv run --only-group lint ruff check

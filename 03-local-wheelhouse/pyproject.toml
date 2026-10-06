@@ -1,0 +1,12 @@
+[project]
+name = "local-wheelhouse"
+version = "0.1.0"
+description = "Installing from a local directory of wheels with no index access"
+requires-python = ">=3.12"
+dependencies = [
+    "python-dateutil>=2.9.0.post0",
+]
+
+[tool.uv]
+no-index = true
+find-links = ["./wheels"]
